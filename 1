@@ -6,21 +6,19 @@
   - name: check file checksum
     stat:
       path: "{{ item.name }}"
-      checksum_algorithm: sha1
     with_items: "{{ files }}"
-    register: output
+    register: test
 
   - name: debug file when checksum matched
     debug:
       msg: "Checksum matched"
-    when: '"{{ item.item.checksum }}" == "{{ item.stat.checksum }}"'
-   # when: output.stat.checksum == "{{ item.item.checksum }}
-    loop: "{{ output.results }}"
+    when: '"{{ item.item.checksum }}" == "{{ item.stat.checksum}}"'
+    loop: "{{ test.results }}"
   
   - name: debug file when checksum matched
     debug:
       msg: "Checksum do not match"
-    when: '"{{ item.item.checksum }}" != "{{ item.stat.checksum }}"'
-    loop: "{{ output.results }}"
+    when: '"{{ item.item.checksum }}" != "{{ item.stat.checksum}}"'
+    loop: "{{ test.results }}"
 
 
