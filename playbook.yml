@@ -2,3 +2,20 @@
   hosts: localhost
   vars_files:
     - files_list.yml
+  tasks:
+  - name: stat module
+    stat:
+      path: "{{ item.name }}"
+      checksum_algorithm: sha1
+    with_items: "{{ files }}"
+    register: output
+  - name: debug module when checksum matches
+    debug:
+      msg: "checksum matches"
+    when: '"{{ item.item.checksum }}" == "{{ item.stat.checksum }}"'
+    loop: "{{ output.results }}"
+  - name: debug module when checksum does match
+    debug:
+      msg: "checksum does not match"
+    when: '"{{ item.item.checksum }}" != "{{ item.stat.checksum }}"'
+    loop: "{{ output.results }}"
