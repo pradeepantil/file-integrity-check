@@ -1,4 +1,24 @@
 - name: Playbook to check file integrity via checksum
   hosts: localhost
+  become: true
   vars_files:
     - files_list.yml
+  tasks:
+  - name: get checksum values
+    stat:
+      path: "{{ item.name }}"
+      checksum_algorithm: sha1
+    with_items: "{{ files }}"
+    register: output  
+
+  - name: file checksum match
+    debug:
+      msg: "check sum correct"
+    when: '"{{ item.item.checksum }}" == "{{ item.stat.checksum }}"'
+    loop: "{{ output.results }}"
+
+  - name: file checksum donot match
+    debug:
+      msg: "checksum not match"
+    when: '"{{ item.item.checksum }}" != "{{ item.stat.checksum }}"'
+    loop: "{{ output.results }}"

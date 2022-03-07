@@ -1,7 +1,7 @@
 files:
 - name: /tmp/abc1.txt
-  checksum: "da39a3ee5e6b4b0d3255bfef95601890af645644"
-- name: /tmp/abc2.txt
   checksum: "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+- name: /tmp/abc2.txt
+  checksum: "ks39a3ee5e6b4b0d3255bfef95601890afd80702"
 - name: /tmp/abc3.txt
-  checksum: "d41d8cd98f00b204e9800998ecf8427e"
+  checksum: "da39a3ee5e6b4b0d3255bfef95601890afd80709"
