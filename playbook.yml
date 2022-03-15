@@ -3,21 +3,3 @@
   become: true
   vars_files:
     - files_list.yml
-  tasks:
-  - name: stat module
-    stat:
-      path: "{{ item.name }}"
-    with_items: "{{ files }}"
-    register: output
-
-  - name: Print checksum correct
-    debug:
-      msg: Print checksum correct
-    when: '"{{ item.item.checksum }}" == "{{ item.stat.checksum }}"'
-    loop: "{{ output.results }}"
-
-  - name: checksum not match
-    debug:
-      msg: checksum not match
-    when: '"{{ item.item.checksum }}" != "{{ item.stat.checksum }}"'
-    loop: "{{ output.results }}"
