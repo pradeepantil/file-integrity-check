@@ -1,22 +1,4 @@
 - name: Playbook to check file integrity via checksum
   hosts: localhost
   become: true
-  vars_files:
-    - files_list.yml
-  tasks:
-  - name: Get checksum via stat
-    stat:
-      path: "{{ item.name }}"
-    with_items: "{{ files }}"
-    register: output
-  - name: Print checksum match
-    debug:
-      msg: "check sum correct"
-    when: '"{{ item.item.checksum }}" == "{{ item.stat.checksum }}"'
-    loop: "{{ output.results }}"
-  - name: checksum not match
-    debug:
-      msg: "checksum not match"
-    when: '"{{ item.item.checksum }}" != "{{ item.stat.checksum }}"'
-    loop: "{{ output.results }}"
  
